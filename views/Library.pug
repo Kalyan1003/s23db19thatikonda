@@ -3,7 +3,7 @@ extends layout
 block content
   h1= title
  
-  - let Output = [{LibraryName: "OS Library",Timings:"9AM-4PM" ,place:"ColdenHall"},{LibraryName: "Public Library",Timings:"7AN-3PM" ,place: "Kansas"},{LibraryName: "PK Library",Timings:"10AM-5PM" ,place: "Maryville"}] 
+  - let Output = results;
   script.
     function buy(num){
       alert("You purchased items " + (num+1));
