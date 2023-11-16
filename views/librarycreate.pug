@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    h1= title
+    form(id='LibraryForm', action="/resource/library", method="POST")
+        div.form-group
+            label.libraryAttr(for='name') Library Name
+            input#name(type='text', name='name')
+        div.form-group
+            label.libraryAttr(for='timings') Library timings
+            input#timings(type='number', name='timings')
+        div.form-group
+            label.libraryAttr(for='place') Library place
+            input#place(type='text', name='place')
+        input(type="submit")
+
+    script.
+        document.forms['LibraryForm'].addEventListener('submit', (event) => {
+            event.preventDefault();
+            // TODO do something here to show the user that the form is being submitted
+            fetch(event.target.action, {
+                method: 'POST',
+                body: new URLSearchParams(new FormData(event.target))
+            }).then((resp) => {
+                return resp.json();
+            }).then((body) => {
+                alert("Save succeeded");
+                // TODO handle the response body
+            }).catch((error) => {
+                // TODO handle the error
+                alert("Save failed " + error);
+            });
+        });

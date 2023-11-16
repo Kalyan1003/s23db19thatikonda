@@ -1,0 +1,24 @@
+
+
+extends layout
+
+block content
+  h1= title
+  - let libraryid = toShow._id
+  - let Libraryname = toShow.name
+  - let timings = toShow.timings
+  - let Place = toShow.place
+  div
+    div.row
+      div(class='libraryAttr mr-3') library  ID is:
+      div #{libraryid}
+    div.row
+      div(class='libraryAttr mr-3') library Name is:
+      div #{Libraryname}
+    div.row
+      div(class='libraryAttr mr-3') library Timings is:
+      div #{timings}
+    div.row
+      div(class='libraryAttr mr-3') library Place is:
+      div #{Place}
+  

@@ -12,9 +12,18 @@ exports.library_create_post = function(req, res) {
 res.send('NOT IMPLEMENTED: library create POST');
 };
 // Handle Costume delete form on DELETE.
-exports.library_delete = function(req, res) {
-res.send('NOT IMPLEMENTED: library delete DELETE ' + req.params.id);
+exports.library_delete = async function(req, res) {
+console.log("delete " + req.params.id)
+try {
+result = await library.findByIdAndDelete( req.params.id)
+console.log("Removed " + result)
+res.send(result)
+} catch (err) {
+res.status(500)
+res.send(`{"error": Error deleting ${err}}`);
+}
 };
+
 // Handle Costume update form on PUT.
 exports.library_update_put = function(req, res) {
 res.send('NOT IMPLEMENTED: library update PUT' + req.params.id);
@@ -65,7 +74,7 @@ exports.library_create_post = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
     };
-    
+    //details
     exports.library_detail = async function (req, res) {
         console.log("detail" + req.params.id)
         try {
@@ -98,3 +107,48 @@ exports.library_create_post = async function(req, res) {
     failed`);
         }
     };
+
+    // Handle a show one view with id specified by query
+exports.library_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+    result = await library.findById( req.query.id)
+    res.render('librarydetail',
+    { title: 'library Detail', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
+
+   
+// Handle building the view for creating a costume.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.library_create_Page = function(req, res) {
+console.log("create view")
+try{
+res.render('librarycreate', { title: 'Library Create'});
+}
+catch(err){
+res.status(500)
+res.send(`{'error': '${err}'}`);
+}
+};
+
+// Handle building the view for updating a costume.
+// query provides the id
+exports.library_update_Page = async function(req, res) {
+console.log("update view for item "+req.query.id)
+try{
+let result = await library.findById(req.query.id)
+res.render('libraryupdate', { title: 'library Update', toShow: result });
+}
+catch(err){
+res.status(500)
+res.send(`{'error': '${err}'}`);
+}
+}
+
+    
