@@ -1,0 +1,61 @@
+extends layout
+
+block content
+  .container
+    h1= title
+
+    if (toShow == null)
+      .alert.alert-info
+        h2 No instance to delete
+    else
+      - let libraryid = toShow._id
+      - let libraryname = toShow.name
+      - let librarytimings = toShow.timings
+      - let libraryplace = toShow.place
+      - let actionid = "/resource/library/" + libraryid
+
+      script.
+        let actionid = "#{actionid}"
+
+      .card
+        .card-body
+          div.row
+            .col.libraryAttr
+              strong Library ID:
+            .col #{libraryid}
+          div.row
+            .col.libraryAttr
+              strong Library Name:
+            .col #{libraryname}
+          div.row
+            .col.libraryAttr
+              strong Library Timings:
+            .col #{librarytimings}
+          div.row
+            .col.libraryAttr
+              strong Library Place:
+            .col #{libraryplace}
+
+          .mt-3
+            button.btn.btn-danger.mr-2(onclick="deleteOnid()") Delete
+            button.btn.btn-secondary(onclick="cancel()") Cancel
+
+      script.
+        function cancel() {
+          window.location.href = '/costumes';
+        }
+
+        function deleteOnid() {
+          console.log("starting delete");
+          fetch(actionid, {
+            method: 'DELETE'
+          })
+          .then((resp) => resp.json())
+          .then((body) => {
+            alert("Delete succeeded");
+            window.location.href = '/costumes';
+          })
+          .catch((error) => {
+            alert("Delete failed " + error);
+          });
+        }

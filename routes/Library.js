@@ -14,3 +14,7 @@ router.get('/create', library_controlers.library_create_Page);
 /* GET create update page */
 router.get('/update', library_controlers.library_update_Page);
 
+/* GET delete costume page */
+router.get('/delete', library_controlers.library_delete_Page);
+
+
