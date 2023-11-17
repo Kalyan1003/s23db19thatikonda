@@ -2,17 +2,15 @@ extends layout
 
 block content
   h1= title
- 
-  - let Output = results;
-  script.
-    function buy(num){
-      alert("You purchased items " + (num+1));
-    }
-
-  div.container-fluid
-    div.row
-        each Library , num in Output
-            div.col-sm-2(onClick = `buy(${num})`)
-                p Library Name: #{Library.LibraryName}
-                p Timings  : #{Library.Timings}
-                p Place : #{Library.place}
+  - let items = results;
+  div(class="container-fluid")
+    div(class="row m-1")
+      each item in items
+        - let destination = `dispatch(\"/library/update?id=${item._id}\")`
+        div(class="row-sm-2 m-1")
+          | Item #{item.name}(#{item.timings}) is #{item.place}
+          button.btn(class="btn-primary ml-1", onclick=destination) Update
+          script.
+            function dispatch(path){
+              window.location.href=path
+            }
