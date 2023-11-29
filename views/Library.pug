@@ -2,14 +2,19 @@ extends layout
 
 block content
   h1= title
+  a.btn.btn-primary.btn-sm(href='/Library/create') Create New
   - let items = results;
   div(class="container-fluid")
     div(class="row m-1")
       each item in items
         - let destination = `dispatch(\"/library/update?id=${item._id}\")`
+        - let destination_1 = `dispatch(\"/library/delete?id=${item._id}\")`
+        - let destination_2 = `dispatch(\"/library/detail?id=${item._id}\")`
         div(class="row-sm-2 m-1")
           | Item #{item.name}(#{item.timings}) is #{item.place}
           button.btn(class="btn-primary ml-1", onclick=destination) Update
+          button.btn(class="btn-primary ml-1", onclick=destination_1) delete
+          button.btn(class="btn-primary ml-1", onclick=destination_2) detail
           script.
             function dispatch(path){
               window.location.href=path
